@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess Number of game</title>
+</head>
+<body>
+    <script>
+        function linearSearch(arr, value) {
+            for(let i=0; i< arr.length; i++){
+                if(arr[i]==value){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function binarySearch(arr, value) {
+            let left=0;
+            let right= arr.length-1;
+            let middle;
+            while(left <= right){
+                middle=Math.floor((left+right)/2);
+                if(arr[middle]==value){
+                    return middle;
+                }else if(arr[middle] > value){
+                    right= middle-1;
+                }else if(arr [middle] < value){
+                    left= middle + 1 ;
+                }
+            }
+            return -1;
+        }
+
+       function initArrayOfNumbers(arr) {
+            for(let i=1; i<=100; i++){
+                arr[i-1]=i;
+            }
+       }
+
+
+       ////////////////Start Game /////////////////////
+        let numberArray=[];
+        initArrayOfNumbers(numberArray);
+        let random= Math.floor(Math.random()*100);
+        let secret = numberArray[random];
+        let maxGuessTimes=6;
+        let guessNumber=parseInt(prompt("Bạn hãy dự đoán số nguyên trong phạm vi 1-100 ",""));
+        let index;
+        do{
+            maxGuessTimes--;
+            index=binarySearch(numberArray,guessNumber);
+            if(index != -1){
+                if(numberArray[index]==secret){
+                    alert("Answer: Correct");
+                    break;
+                }else if( numberArray[index] > secret){
+                    alert("Answer: Too high");
+                }else if(numberArray[index] < secret){
+                    alert("Answer: Too low");
+                }
+
+            }
+            guessNumber=parseInt(prompt("Bạn hãy nhập lại số dự đoán ( 1-100) ",""));
+
+        }while(maxGuessTimes > 0);
+        if(maxGuessTimes>0){
+            alert("Bạn đã trúng độc đắc");
+        }else{
+            alert("Chúc bạn may mắn lần sau");
+        }
+
+    </script>
+
+</body>
+</html>
